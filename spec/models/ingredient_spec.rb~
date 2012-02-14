@@ -1,0 +1,31 @@
+require 'spec_helper'
+
+
+  #pending "add some examples to (or delete) #{__FILE__}"
+ describe Ingredient do
+
+  before(:each) do
+    @recipe = Factory(:recipe)
+    @attr = { :content => "value for content" }
+  end
+
+  it "should create a new instance given valid attributes" do
+    @recipe.ingredients.create!(@attr)
+  end
+
+  describe "recipe associations" do
+
+    before(:each) do
+      @ingredient = @recipe.ingredients.create(@attr)
+    end
+
+    it "should have a recipe attribute" do
+      @ingredient.should respond_to(:recipe)
+    end
+
+    it "should have the right associated recipe" do
+      @ingredient.recipe_id.should == @recipe.id
+      @ingredient.recipe.should == @recipe
+    end
+  end
+end
